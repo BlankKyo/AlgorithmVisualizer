@@ -2,6 +2,7 @@
 #include "ui/MainWindow.h"
 #include "ui/SortingWidget.h"
 #include "engine/BubbleSortEngine.h"
+#include "common/RandomGenerator.h"
 
 
 static const char* TAG = "MainWindow";
@@ -64,8 +65,9 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 
 void MainWindow::setupEngine() {
     auto engine = std::make_unique<BubbleSortEngine>();
+    Random_Vector(int, 20, 10, 100);
     auto data = std::make_shared<std::vector<int>>(
-        std::vector<int>{64, 34, 25, 12, 22, 11, 90, 45, 77, 55}
+        Random_Vector(int, 20, 10, 100)
     );
     engine->initialize(data);
 

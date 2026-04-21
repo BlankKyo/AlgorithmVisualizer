@@ -38,6 +38,7 @@ qt_add_executable(AlgorithmVisualizer
     src/ui/MainWindow.cpp
     src/ui/SortingWidget.cpp
     src/utils/Logger.cpp
+    src/common/RandomGenerator.cpp
     include/ui/MainWindow.h       # ← required for AUTOMOC
     include/ui/SortingWidget.h    # ← required for AUTOMOC
 )

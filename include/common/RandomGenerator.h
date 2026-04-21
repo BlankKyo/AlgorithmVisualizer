@@ -7,8 +7,6 @@
 
 namespace Utils {
 
-static const char* TAG = "RandomGenerator";
-
 class RandomGenerator {
 public:
     // Delete copy constructor and assignment to ensure it stays a singleton
@@ -23,21 +21,7 @@ public:
 
     // Template for generating vectors of integers
     template<typename T = int>
-    std::vector<T> generate_vector(size_t size, T minVal = 1, T maxVal = 100) {
-        if constexpr (!std::is_integral<T>::value) {
-            LOG_ERROR(TAG, "T must be an integral type.");
-            return {};
-        }
-        std::vector<T> vec(size);
-        std::uniform_int_distribution<T> dis(minVal, maxVal);
-
-        for (auto& item : vec) {
-            item = dis(gen);
-        }
-        LOG_INFO(TAG, "Generated vector of size " + std::to_string(size) + 
-                         " with values in range [" + std::to_string(minVal) + ", " + std::to_string(maxVal) + "]");
-        return vec;
-    }
+    std::vector<T> generate_vector(size_t size, T minVal = 1, T maxVal = 100);
 
 private:
     // Private constructor so nobody can "new" it
@@ -48,3 +32,8 @@ private:
 };
 
 } // namespace Utils
+
+// ─────────────────────────────────────────────
+//  Convenience macros — use these everywhere
+// ─────────────────────────────────────────────
+#define Random_Vector(T, sz, min, max) Utils::RandomGenerator::getInstance().generate_vector<T>(sz, min, max)

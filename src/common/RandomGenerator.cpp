@@ -28,4 +28,10 @@ std::vector<T> RandomGenerator::generate_vector(size_t size, T minVal, T maxVal)
     return vec;
 }
 
+
+// This forces the compiler to create the template versions of the function
+template std::vector<int> RandomGenerator::generate_vector<int>(size_t, int, int);
+template std::vector<long> RandomGenerator::generate_vector<long>(size_t, long, long);
+template std::vector<short> RandomGenerator::generate_vector<short>(size_t, short, short);
+
 }
