@@ -23,6 +23,9 @@ public:
     template<typename T = int>
     std::vector<T> generate_vector(size_t size, T minVal = 1, T maxVal = 100);
 
+    template<typename T = int>
+    T generate_Number(T minVal = 1, T maxVal = 100);
+
 private:
     // Private constructor so nobody can "new" it
     RandomGenerator() : rd(), gen(rd()) {}

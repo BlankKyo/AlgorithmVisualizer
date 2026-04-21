@@ -65,7 +65,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 
 void MainWindow::setupEngine() {
     auto engine = std::make_unique<BubbleSortEngine>();
-    Random_Vector(int, 20, 10, 100);
     auto data = std::make_shared<std::vector<int>>(
         Random_Vector(int, 20, 10, 100)
     );
@@ -73,8 +72,6 @@ void MainWindow::setupEngine() {
 
     // Wire the callback: engine fires → UI repaints
     engine->setStepCallback([this](const StepEvent& e) {
-        LOG_DEBUG(TAG, "Received event: " + std::to_string(static_cast<int>(e.type)) +
-                         " indices: " + std::to_string(e.indexA) + ", " + std::to_string(e.indexB));
         applyStep(e);
     });
 
