@@ -6,6 +6,8 @@ class BubbleSortEngine : public AlgorithmEngine {
 public:
     void initialize(std::shared_ptr<std::vector<int>>  data) override;
 
+    ~BubbleSortEngine();
+
 protected:
     bool doStep() override;
 

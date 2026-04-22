@@ -1,5 +1,5 @@
-// src/common/RandomGenerator.cpp
-#include "common/RandomGenerator.h"
+// src/utils/RandomGenerator.cpp
+#include "utils/RandomGenerator.h"
 
 
 

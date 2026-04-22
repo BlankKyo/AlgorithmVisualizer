@@ -2,6 +2,7 @@
 #include "engine/BubbleSortEngine.h"
 #include <algorithm>
 #include "utils/Logger.h"
+#include "utils/MemoryUtils.h"
 #include <memory>
 
 static const char* TAG = "BubbleSortingEngine";
@@ -11,6 +12,12 @@ void BubbleSortEngine::initialize(std::shared_ptr<std::vector<int>> data) {
     m_i = 0;
     m_j = 0;
     m_finished = false;
+    LOG_INFO(TAG, "Initialized with data of size " + std::to_string(m_data->size()));
+    LOG_DEBUG(TAG, MemoryUtils::formatLifecycleLog("Constructor", this, sizeof(*this)));
+}
+
+BubbleSortEngine::~BubbleSortEngine() {
+    LOG_DEBUG(TAG, MemoryUtils::formatLifecycleLog("Destructor", this, sizeof(*this)));
 }
 
 bool BubbleSortEngine::doStep() {

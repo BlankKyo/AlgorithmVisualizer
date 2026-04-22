@@ -37,10 +37,15 @@ qt_add_executable(AlgorithmVisualizer
     src/main.cpp
     src/ui/MainWindow.cpp
     src/ui/SortingWidget.cpp
+    src/ui/HomePage.cpp
+    src/ui/AlgorithmWidget.cpp
     src/utils/Logger.cpp
-    src/common/RandomGenerator.cpp
+    src/utils/RandomGenerator.cpp
+    src/utils/MemoryUtils.cpp
     include/ui/MainWindow.h       # ← required for AUTOMOC
     include/ui/SortingWidget.h    # ← required for AUTOMOC
+    include/ui/HomePage.h         # ← required for AUTOMOC
+    include/ui/AlgorithmWidget.h  # ← required for AUTOMOC
 )
 
 target_include_directories(AlgorithmVisualizer PRIVATE include)

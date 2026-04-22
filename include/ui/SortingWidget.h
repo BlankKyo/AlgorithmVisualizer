@@ -1,26 +1,28 @@
 // src/ui/SortingWidget.h
 #pragma once
-#include <QWidget>
+#include "ui/AlgorithmWidget.h"
 #include <vector>
-#include "engine/AlgorithmEngine.h"
 #include <memory>
 
 
 
-class SortingWidget : public QWidget {
+class SortingWidget : public AlgorithmWidget {
     Q_OBJECT
- 
+
 public:
     explicit SortingWidget(QWidget* parent = nullptr);
- 
-    void setData(std::shared_ptr<std::vector<int>> data);
+
+    ~SortingWidget();
+
+    void setData(std::shared_ptr<std::vector<int>> data) override;
+    void highlight(int indexA, int indexB, StepEvent::Type type) override;
+    void updateVisualization() override;
     void swapBars(int a, int b);
-    void highlight(int a, int b, StepEvent::Type type);
     void markSorted(int fromIndex);
- 
+
 protected:
     void paintEvent(QPaintEvent* event) override;
- 
+
 private:
     std::shared_ptr<std::vector<int>> m_data = nullptr;
     int               m_highlightA  = -1;

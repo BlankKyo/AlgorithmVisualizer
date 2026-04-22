@@ -2,12 +2,20 @@
 #include "ui/SortingWidget.h"
 #include <QPainter>
 #include <QPaintEvent>
+#include "utils/Logger.h"
+#include "utils/MemoryUtils.h"
 #include <memory>
 
+static const char* TAG = "SortingWidget";
 
-SortingWidget::SortingWidget(QWidget* parent) : QWidget(parent) {
+SortingWidget::SortingWidget(QWidget* parent) : AlgorithmWidget(parent) {
     setMinimumHeight(300);
     setStyleSheet("background-color: #1e1e2e;");
+    LOG_DEBUG(TAG, MemoryUtils::formatLifecycleLog("Constructor", this, sizeof(*this)));
+}
+
+SortingWidget::~SortingWidget() {
+    LOG_DEBUG(TAG, MemoryUtils::formatLifecycleLog("Destructor", this, sizeof(*this)));
 }
 
 void SortingWidget::setData(std::shared_ptr<std::vector<int>> data) {
@@ -20,6 +28,10 @@ void SortingWidget::highlight(int a, int b, StepEvent::Type type) {
     m_highlightA = a;
     m_highlightB = b;
     m_lastType   = type;
+}
+
+void SortingWidget::updateVisualization() {
+    update();
 }
 
 void SortingWidget::paintEvent(QPaintEvent*) {
