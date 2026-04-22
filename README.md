@@ -6,12 +6,14 @@ An interactive desktop application built in **C++ with Qt 6** that visualizes fu
 
 ## Features
 
+- 🏠 **Home Page** — Browse and select from multiple algorithm categories
 - Real-time step-by-step visualization
-- Start, Pause, and Reset controls
+- Start, Pause, Reset, and Back controls
 - Adjustable speed slider
-- Live status bar (Ready / Running / Paused / Done)
+- Multiple algorithm categories (Sorting, Searching, Graph Algorithms, Dynamic Programming)
 - Clean architecture — algorithm engine is pure C++ with zero Qt dependency
 - Logger utility for debug output
+- Extensible widget system for adding new algorithm visualizations
 
 ---
 
@@ -20,20 +22,33 @@ An interactive desktop application built in **C++ with Qt 6** that visualizes fu
 ### Sorting
 | Algorithm | Status |
 |-----------|--------|
-| Bubble Sort | ✅ v1.0 |
+| Bubble Sort | ✅ v1.1 |
 | Quick Sort | 🔜 v2.0 |
 | Merge Sort | 🔜 v2.0 |
 | Heap Sort | 🔜 v4.0 |
 | Insertion Sort | 🔜 v4.0 |
 | Selection Sort | 🔜 v4.0 |
 
-### Pathfinding
+### Searching
 | Algorithm | Status |
 |-----------|--------|
-| BFS | 🔜 v1.0 |
-| Dijkstra | 🔜 v2.0 |
+| Linear Search | 🔜 v2.0 |
+| Binary Search | 🔜 v2.0 |
+
+### Graph Algorithms
+| Algorithm | Status |
+|-----------|--------|
+| BFS | 🔜 v2.0 |
+| DFS | 🔜 v2.0 |
+| Dijkstra | 🔜 v3.0 |
 | A* | 🔜 v4.0 |
-| DFS | 🔜 v4.0 |
+
+### Dynamic Programming
+| Algorithm | Status |
+|-----------|--------|
+| Fibonacci Sequence | 🔜 v3.0 |
+| Knapsack Problem | 🔜 v3.0 |
+| Longest Common Subsequence | 🔜 v3.0 |
 
 ---
 
@@ -49,35 +64,66 @@ AlgorithmVisualizer/
 │   │   ├── AlgorithmEngine.h      # Abstract base + StepEvent
 │   │   └── BubbleSortEngine.h
 │   ├── ui/
-│   │   ├── MainWindow.h
-│   │   └── SortingWidget.h
-│   └── utils/
-│       └── Logger.h
+│   │   ├── MainWindow.h           # Main window with navigation
+│   │   ├── HomePage.h             # Algorithm selection page
+│   │   ├── AlgorithmWidget.h      # Base class for algorithm visualizations
+│   │   └── SortingWidget.h        # Sorting visualization widget
+│   ├── utils/
+│   │   ├── Logger.h
+│   │   ├── MemoryUtils.h      
+│   │   └── RandomGenerator.h
+│   └── datastructure/
+│       └── graphs/
+│           └── Graph.h
 └── src/
     ├── main.cpp
     ├── engine/
-    │   ├── AlgorithmEngine.cpp
     │   └── BubbleSortEngine.cpp
     ├── ui/
     │   ├── MainWindow.cpp
+    │   ├── HomePage.cpp           # Home page implementation
+    │   ├── AlgorithmWidget.cpp    # Base algorithm widget
     │   └── SortingWidget.cpp
-    └── utils/
-        └── Logger.cpp
+    ├── utils/
+    │   ├── Logger.cpp
+    │   ├── MemoryUtils.cpp      
+    │   └── RandomGenerator.cpp
 ```
 
 ---
 
+### UI Architecture
+
+The application uses a stacked widget architecture:
+
+```
+MainWindow (QMainWindow)
+  ├── HomePage
+  │   ├── Category List (Sorting, Searching, Graph, DP)
+  │   ├── Algorithm List (context-dependent)
+  │   └── Description Panel
+  │
+  └── AlgorithmPage
+      ├── Controls Bar (Back, Start, Pause, Reset, Speed)
+      └── AlgorithmWidget (SortingWidget, GraphWidget, etc.)
+```
+
 ### Data flow
 
 ```
+HomePage::algorithmSelected()
+  → MainWindow::onAlgorithmSelected()
+      → MainWindow::setupEngine()
+          → Creates appropriate engine (BubbleSortEngine, etc.)
+          → Creates appropriate widget (SortingWidget, etc.)
 QTimer::timeout
   → MainWindow::onTimerTick()
       → AlgorithmEngine::step()
-          → BubbleSortEngine::doStep()
+          → Specific engine doStep()
               → fireEvent(StepEvent)
                   → MainWindow::applyStep()
-                      → SortingWidget::repaint()
-                          → paintEvent() reads engine->getData()
+                      → AlgorithmWidget::updateVisualization()
+                          → paintEvent() reads engine data
 ```
 
 ### StepEvent types
@@ -107,12 +153,13 @@ QTimer::timeout
 
 | Version | Focus | Status |
 |---------|-------|--------|
-| **v1.0** | Bubble Sort, BFS, basic controls, clean architecture | ✅ Done |
-| v2.0 | QuickSort, MergeSort, Dijkstra, wall drawing, stats overlay | 🔜 Next |
-| v3.0 | Smooth animations, pseudocode panel, step forward/back, themes | 🔜 |
-| v4.0 | Heap Sort, A*, DFS, side-by-side comparison, complexity panel | 🔜 |
-| v5.0 | Custom input, export to GIF, benchmarking, plugin API | 🔜 |
-| v6.0 | Unit tests, CI/CD, cross-platform packaging, accessibility | 🔜 |
+| **v1.0** | Bubble Sort, basic controls, clean architecture | ✅ Done |
+| **v1.1** | Home page, multi-algorithm framework, extensible widgets | ✅ Done |
+| v2.0 | Additional sorting (Quick, Merge), Searching algorithms | 🔜 Next |
+| v3.0 | Graph algorithms (BFS, DFS), smooth animations | 🔜 |
+| v4.0 | Dynamic programming, A*, side-by-side comparison | 🔜 |
+| v5.0 | Custom input, export to GIF, benchmarking | 🔜 |
+| v6.0 | Unit tests, CI/CD, cross-platform packaging | 🔜 |
 
 ---
 
